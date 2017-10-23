@@ -1,0 +1,32 @@
+{
+  "name":        "nascom/framework-bundle",
+  "description": "Default setup for Nascom projects.",
+  "license":     "MIT",
+  "authors": [
+    {
+      "name": "Nascom",
+      "homepage": "https://www.nascom.be"
+    },
+    {
+      "name": "Stijn De Meyere",
+      "role": "Maintainer"
+    },
+    {
+      "name": "Wim Vandersmissen",
+      "role": "Maintainer"
+    }
+  ],
+  "require": {
+    "php":  ">=5.6",
+    "symfony/symfony": "~3.0",
+    "league/tactician-bundle": "~1.0",
+    "league/tactician-doctrine": "^1.1",
+    "league/tactician-logger": "^0.10.0",
+    "chrisguitarguy/tactician-symfony-events": "^1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Nascom\\FrameworkBundle\\": "src"
+    }
+  }
+}

@@ -1,0 +1,24 @@
+services:
+    nascom.framework_bundle.tactician.middleware.symfony_events:
+        class: Chrisguitarguy\Tactician\SymfonyEvents\EventMiddleware
+        arguments:
+            - '@event_dispatcher'
+
+    nascom.framework_bundle.tactician.logger.formatter:
+        class: League\Tactician\Logger\Formatter\ClassPropertiesFormatter
+
+    nascom.framework_bundle.tactician.middleware.logger:
+        class: League\Tactician\Logger\LoggerMiddleware
+        arguments:
+            - '@nascom.framework_bundle.tactician.logger.formatter'
+            - '@monolog.logger'
+
+    nascom.framework_bundle.tactician.commandbus.default:
+        class: League\Tactician\CommandBus
+        arguments:
+            - # The command bus requires an array of middlewares
+                - '@nascom.framework_bundle.tactician.middleware.logger'
+                - '@nascom.framework_bundle.tactician.middleware.symfony_events'
+                - '@tactician.middleware.locking'
+                - '@tactician.middleware.doctrine'
+                - '@tactician.middleware.command_handler'

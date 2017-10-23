@@ -1,0 +1,7 @@
+services:
+    nascom.framework_bundle.listener.redirect_to_route:
+        class: Nascom\FrameworkBundle\EventListener\RedirectToRouteResponseListener
+        arguments:
+            - '@router'
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }

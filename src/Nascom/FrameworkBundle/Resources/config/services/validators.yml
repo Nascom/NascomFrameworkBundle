@@ -1,0 +1,7 @@
+services:
+    nascom.framework_bundle.validators.unique_entity:
+        class: Nascom\FrameworkBundle\Validator\Constraints\UniqueEntityValidator
+        arguments:
+            - '@doctrine'
+        tags:
+            - { name: validator.constraint_validator, alias: nascom.unique_entity }
