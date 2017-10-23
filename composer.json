@@ -2,6 +2,7 @@
   "name":        "nascom/framework-bundle",
   "description": "Default setup for Nascom projects.",
   "license":     "MIT",
+  "type": "symfony-bundle",
   "authors": [
     {
       "name": "Nascom",
@@ -26,7 +27,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Nascom\\FrameworkBundle\\": "src"
+      "Nascom\\FrameworkBundle\\": ""
     }
   }
 }
