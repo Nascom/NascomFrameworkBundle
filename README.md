@@ -31,6 +31,7 @@ class AppKernel extends Kernel
         $bundles = array(
             // ...
             
+            new League\Tactician\Bundle\TacticianBundle(),
             new Nascom\FrameworkBundle\NascomFrameworkBundle(),
         );
         
@@ -40,6 +41,8 @@ class AppKernel extends Kernel
     // ...
 }
 ```
+
+Note that currently the TacticianBundle is a hard dependency, so you should make sure it's included as well...
 
 ## License
 The MIT License (MIT). Please see [License File](LICENSE) for more information.
