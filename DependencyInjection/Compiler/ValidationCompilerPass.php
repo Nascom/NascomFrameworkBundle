@@ -25,11 +25,11 @@ class ValidationCompilerPass implements CompilerPassInterface
         }
 
         if (!empty($files['yml'])) {
-            $container->getDefinition('validator.builder')->addMethodCall('addYamlMappings', $files);
+            $container->getDefinition('validator.builder')->addMethodCall('addYamlMappings', [$files['yml']]);
         }
 
         if (!empty($files['xml'])) {
-            $container->getDefinition('validator.builder')->addMethodCall('addXmlMappings', $files);
+            $container->getDefinition('validator.builder')->addMethodCall('addXmlMappings', [$files['xml']]);
         }
     }
 
