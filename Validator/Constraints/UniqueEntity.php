@@ -15,7 +15,6 @@ use Symfony\Component\Validator\Constraint;
 class UniqueEntity extends Constraint
 {
     public $message = 'This value is already used.';
-    public $service = 'nascom.framework_bundle.validators.unique_entity';
     public $em = null;
     public $class = null;
     public $repositoryMethod = 'findBy';
@@ -29,13 +28,11 @@ class UniqueEntity extends Constraint
     }
 
     /**
-     * The validator must be defined as a service with this name.
-     *
      * @return string
      */
     public function validatedBy()
     {
-        return $this->service;
+        return UniqueEntityValidator::class;
     }
 
     /**

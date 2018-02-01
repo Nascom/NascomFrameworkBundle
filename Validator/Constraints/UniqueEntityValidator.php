@@ -1,8 +1,15 @@
 <?php
 
+/*
+ * This file is based on UniqueEntityValidator of the Symfony package.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Nascom\FrameworkBundle\Validator\Constraints;
-
 
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Symfony\Component\PropertyAccess\PropertyAccess;
@@ -11,6 +18,11 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 use Symfony\Component\Validator\ConstraintValidator;
 
+/**
+ * Unique Entity Validator checks if one or a set of fields contain unique values.
+ *
+ * @author Benjamin Eberlei <kontakt@beberlei.de>
+ */
 class UniqueEntityValidator extends ConstraintValidator
 {
     /**
@@ -18,22 +30,19 @@ class UniqueEntityValidator extends ConstraintValidator
      */
     private $registry;
 
-    /**
-     * UniqueEntityValidator constructor.
-     */
     public function __construct(ManagerRegistry $registry)
     {
         $this->registry = $registry;
     }
 
     /**
-     * @param mixed $value
+     * @param object     $entity
      * @param \Symfony\Component\Validator\Constraint $constraint
      *
      * @throws UnexpectedTypeException
      * @throws ConstraintDefinitionException
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($entity, Constraint $constraint)
     {
         $className = $constraint->class ? $constraint->class : get_class($entity);
 
@@ -78,7 +87,8 @@ class UniqueEntityValidator extends ConstraintValidator
                 throw new ConstraintDefinitionException(sprintf('The field "%s" is not mapped by Doctrine, so it cannot be validated for uniqueness.', $fieldName));
             }
 
-            $criteria[$fieldName] = $class->reflFields[$fieldName]->getValue($entity);
+            $accessor = PropertyAccess::createPropertyAccessor();
+            $criteria[$fieldName] = $accessor->getValue($entity, $fieldName);
 
             if ($constraint->ignoreNull && null === $criteria[$fieldName]) {
                 return;
@@ -126,7 +136,8 @@ class UniqueEntityValidator extends ConstraintValidator
 
             $ignore = true;
             foreach ($class->getIdentifierFieldNames() as $fieldName) {
-                if ($accessor->getValue($entity, $fieldName) != $accessor->getValue($resultEntity, $fieldName)) {
+                if (!$accessor->isReadable($entity, $fieldName) ||
+                    $accessor->getValue($entity, $fieldName) != $accessor->getValue($resultEntity, $fieldName)) {
                     $ignore = false;
                 }
             }
